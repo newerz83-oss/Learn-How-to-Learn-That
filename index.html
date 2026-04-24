@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACFROG Quick Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --border: #E2DDD5;
+    --border-light: #EDE9E3;
+    --text-primary: #1A1814;
+    --text-secondary: #5C574F;
+    --text-muted: #9C9790;
+    --accent: #2C5F8A;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 0;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .brand-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+
+  .brand-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  #search {
+    width: 100%;
+    padding: 9px 12px 9px 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  #search:focus { border-color: #6FA3C8; background: #fff; }
+  #search::placeholder { color: var(--text-muted); }
+
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+  }
+
+  .view-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+
+  .view-btn.active {
+    background: var(--surface);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  /* ── Filter chips ── */
+  .filter-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-light);
+    padding: 10px 24px;
+  }
+
+  .filter-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .chip {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--bg);
+    color: var(--text-secondary);
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .chip:hover { border-color: #9CB8D0; color: var(--text-primary); }
+  .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ── Main layout ── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .stats-bar {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  /* ── Section cards ── */
+  .section-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+
+  .section-block:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 6px 16px rgba(0,0,0,0.05); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 18px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+    transition: background 0.12s;
+  }
+
+  .section-header:hover { background: #FAFAF8; }
+  .section-header.open { border-bottom-color: var(--border-light); }
+
+  .sec-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .sec-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+  }
+
+  .sec-count {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .chevron {
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .chevron.open { transform: rotate(180deg); }
+
+  .section-body { display: none; }
+  .section-body.open { display: block; }
+
+  /* ── Split columns ── */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 640px) { .cols { grid-template-columns: 1fr; } }
+
+  .col {
+    padding: 16px 18px;
+  }
+
+  .col + .col {
+    border-left: 1px solid var(--border-light);
+  }
+
+  @media (max-width: 640px) { .col + .col { border-left: none; border-top: 1px solid var(--border-light); } }
+
+  .col-head {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .col-head-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .that .col-head { color: #1A5A8A; }
+  .that .col-head-dot { background: #1A5A8A; }
+  .how .col-head { color: #2D6A1F; }
+  .how .col-head-dot { background: #2D6A1F; }
+
+  .item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 9px;
+    align-items: flex-start;
+  }
+
+  .item:last-child { margin-bottom: 0; }
+
+  .item-ref {
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 32px;
+    padding-top: 2px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .that .item-ref { color: #2471A3; }
+  .how .item-ref { color: #1E8449; }
+
+  .item-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  mark {
+    background: #FFF176;
+    color: var(--text-primary);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* ── Compact / card view ── */
+  .compact .cols { grid-template-columns: 1fr 1fr; }
+  .compact .item-text { font-size: 12px; }
+  .compact .col { padding: 12px 16px; }
+
+  /* ── Card grid view ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+
+  .card-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .card-section-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-items { padding: 0 16px 14px; }
+
+  .card-item {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-light);
+    line-height: 1.45;
+    display: flex;
+    gap: 7px;
+  }
+
+  .card-item:last-child { border-bottom: none; }
+
+  .empty { text-align: center; color: var(--text-muted); padding: 3rem; font-size: 14px; }
+
+  /* ── Section colour palette ── */
+  .s1  { background: #EDE7FD; color: #4527A0; border-color: #C5B3F5; }
+  .s2  { background: #E3F2FD; color: #0D47A1; border-color: #90CAF9; }
+  .s3  { background: #E0F2F1; color: #00695C; border-color: #80CBC4; }
+  .s4  { background: #FBE9E7; color: #BF360C; border-color: #FFAB91; }
+  .s5  { background: #FFF8E1; color: #E65100; border-color: #FFE082; }
+  .s6  { background: #E8F5E9; color: #1B5E20; border-color: #A5D6A7; }
+  .s7  { background: #FCE4EC; color: #880E4F; border-color: #F48FB1; }
+  .s8  { background: #F3E5F5; color: #4A148C; border-color: #CE93D8; }
+  .s9  { background: #E1F5FE; color: #01579B; border-color: #81D4FA; }
+  .s10 { background: #EFEBE9; color: #3E2723; border-color: #BCAAA4; }
+
+  /* ── Research citations ── */
+  .research-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: 6px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid #C5B3F5;
+    background: #EDE7FD;
+    color: #4527A0;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    vertical-align: middle;
+    line-height: 1.6;
+    white-space: nowrap;
+    transition: all 0.12s;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.01em;
+  }
+  .research-btn:hover { background: #D1C4FD; border-color: #9C7CF5; }
+  .research-btn svg { flex-shrink: 0; }
+
+  .research-panel {
+    display: none;
+    margin: 8px 0 4px 40px;
+    background: #F5F2FE;
+    border: 1px solid #D1C4FD;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  .research-panel.open { display: block; }
+
+  .research-panel-head {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #6B47C0;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .ref-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+    align-items: flex-start;
+  }
+  .ref-item:last-child { margin-bottom: 0; }
+
+  .ref-bullet {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #9C7CF5;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .ref-text {
+    color: #3D2B80;
+    line-height: 1.5;
+    font-size: 11.5px;
+  }
+
+  .ref-link {
+    color: #6B47C0;
+    text-decoration: none;
+    font-size: 10px;
+    margin-left: 4px;
+    border-bottom: 1px dashed #9C7CF5;
+  }
+  .ref-link:hover { color: #4527A0; border-bottom-style: solid; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-title">ACFROG</span>
+      <span class="brand-sub">Quick Reference</span>
+    </div>
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="search" placeholder="Search all statements…" oninput="render()">
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" onclick="setView('accordion', this)">Accordion</button>
+      <button class="view-btn" onclick="setView('cards', this)">Cards</button>
+    </div>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <div class="filter-inner" id="chips"></div>
+</div>
+
+<main>
+  <div class="stats-bar" id="stats"></div>
+  <div id="output"></div>
+</main>
+
+<script>
+const data = [
+  {
+    num:1, title:"School Culture", cls:"s1",
+    that:[
+      ["1.1","High-quality teaching has a long-term positive effect on pupils' life chances, particularly for children from disadvantaged backgrounds."],
+      ["1.2","Teacher expectations can affect pupil outcomes; setting goals that challenge and stretch pupils is essential."],
+      ["1.3","Setting clear expectations can help communicate shared values that improve classroom and school culture."],
+      ["1.4","Teachers have the ability to affect and improve the wellbeing, motivation and behaviour of their pupils."],
+      ["1.5","Teachers are key role models, who can influence the attitudes, values and behaviours of their pupils."],
+      ["1.6","Teachers can influence pupils' resilience and beliefs about their ability to succeed, by ensuring all pupils have the opportunity to experience meaningful success."],
+      ["1.7","A culture of mutual trust and respect between colleagues fosters effective relationships and supportive professional environments."],
+      ["1.8","Building alignment of staff around the intended school culture can create coherence in a school and give direction and purpose to the staff's work teaching pupils."]
+    ],
+    how:[
+      ["1.a","Ensuring the strategic direction sets ambitious standards for all pupils."],
+      ["1.b","Understanding and promoting the strategic direction, communicating about it regularly, and encouraging every member of the school community to support it."],
+      ["1.c","Ensuring all aspects of the school's approach to continuous improvement are aligned to each other and around this strategic direction."],
+      ["1.d","Paying particular attention to securing alignment between curriculum, assessment and teaching, and of these to the school's ambitious goals for its pupils."],
+      ["1.e","Articulating, modelling and rehearsing practices that contribute to the intended school culture and supporting every member of the school community, particularly middle leaders, to do the same."],
+      ["1.f","Prioritising the use of intentional and consistent language that promotes challenge, aspiration and high expectations for pupils; and professional development and high professional standards for all colleagues."],
+      ["1.g","Implementing and monitoring the effects of school policies (particularly in your area of responsibility) to create an environment for pupils and colleagues where everyone feels welcome, safe, and able to learn from mistakes."]
+    ]
+  },
+  {
+    num:2, title:"Teaching", cls:"s2",
+    that:[
+      ["2.1","Learning involves a lasting change in pupils' capabilities or understanding."],
+      ["2.2","Effective teaching can transform pupils' knowledge, capabilities and beliefs about learning."],
+      ["2.3","Paired and group activities can increase pupil success, but to work together effectively pupils need guidance, support and practice."],
+      ["2.4","How pupils are grouped is also important; care should be taken to monitor the impact of groupings on pupil attainment, behaviour and motivation."],
+      ["2.5","Homework can improve pupil outcomes, particularly for older pupils, but quality and relevance to main class teaching is more important than the amount set."],
+      ["2.6","Prior knowledge plays an important role in how pupils learn; committing some key facts to their long-term memory is likely to help pupils learn more complex ideas."],
+      ["2.7","An important factor in learning is memory, which can be thought of as comprising two elements: working memory and long-term memory."],
+      ["2.8","Working memory is where information that is being actively processed is held, but its capacity is limited and can be overloaded."],
+      ["2.9","Long-term memory can be considered as a store of knowledge that changes as pupils learn by integrating new ideas with existing knowledge."],
+      ["2.10","Where prior knowledge is weak, pupils are more likely to develop misconceptions, particularly if new ideas are introduced too quickly."],
+      ["2.11","Regular purposeful practice of what has previously been taught can help consolidate material and help pupils remember what they have learned."],
+      ["2.12","Requiring pupils to retrieve information from memory, and spacing practice so that pupils revisit ideas after a gap, are also likely to strengthen recall."],
+      ["2.13","Worked examples that take pupils through each step of a new process are also likely to support pupils to learn."],
+      ["2.14","Effective teachers introduce new material in steps, explicitly linking new ideas to what has been previously studied and learned."],
+      ["2.15","Modelling helps pupils understand new processes and ideas; good models make abstract ideas concrete and accessible."],
+      ["2.16","Guides, scaffolds and worked examples can help pupils apply new ideas, but should be gradually removed as pupil expertise increases."],
+      ["2.17","Explicitly teaching pupils metacognitive strategies linked to subject knowledge, including how to plan, monitor and evaluate, supports independence and academic success."],
+      ["2.18","Questioning is an essential tool for teachers; questions can be used for many purposes, including to check pupils' prior knowledge, assess understanding and break down problems."],
+      ["2.19","High-quality classroom discussion can support pupils to articulate key ideas, consolidate understanding and extend their vocabulary."],
+      ["2.20","Practice is an integral part of effective teaching; ensuring pupils have repeated opportunities to practise, with appropriate guidance and support, increases success."]
+    ],
+    how:[
+      ["2.a","Working with middle leaders to plan for the teaching of foundational knowledge, the removal of scaffolding as pupils achieve high degrees of success and the practice of applying new knowledge and skills."],
+      ["2.b","Explaining and exemplifying how to break tasks down into constituent components when first setting up independent practice."],
+      ["2.c","Promoting the use of retrieval and spaced practice to build automatic recall of key knowledge and interleaving of concrete and abstract examples."],
+      ["2.d","Demonstrating and promoting effective practice that highlights the importance of explanations that start at the point of current pupil understanding; and include concrete representation of abstract ideas (e.g. making use of metaphors)."],
+      ["2.e","Promoting high quality modelling that highlights the importance of narrating thought processes to make it clear how an expert might think when completing a task; drawing pupils' attention to links with prior knowledge; and making the steps in a process memorable."],
+      ["2.f","Supporting staff to focus lesson time on what they want pupils to think hard about."],
+      ["2.g","Promoting the use of a range of question types that can improve the quality of class discussions (e.g. by modelling new vocabulary or asking pupils to justify answers to extend and challenge pupils)."],
+      ["2.h","Providing examples of scaffolds for pupil discussion that increase the focus and rigour of dialogue."],
+      ["2.i","Working with school leaders to encourage approaches that support effective collaborative or paired work (e.g. clear success criteria, providing high-quality models, providing explicit guidance on how to work together effectively) whilst highlighting considerations that may affect its success."]
+    ]
+  },
+  {
+    num:3, title:"Curriculum & Assessment", cls:"s3",
+    that:[
+      ["3.1","A school's curriculum enables it to set out the knowledge, skills and values that its pupils will learn, encompassing the national curriculum within a coherent wider vision for successful learning."],
+      ["3.2","School subjects are their own distinct disciplines which have reference points in disciplines and practices beyond the school."],
+      ["3.3","The potential content of many subjects (especially literature, humanities and arts) is contestable and requires thoughtful, sustained review and engagement with that subject discipline."],
+      ["3.4","Secure subject knowledge helps teachers to motivate pupils and teach effectively."],
+      ["3.5","Ensuring pupils master foundational concepts and knowledge before moving on is likely to build pupils' confidence and help them succeed."],
+      ["3.6","Anticipating common misconceptions within particular subjects is also an important aspect of curricular knowledge; working closely with colleagues to develop an understanding of likely misconceptions is valuable."],
+      ["3.7","Explicitly teaching pupils the knowledge and skills they need to succeed within particular subject areas is beneficial."],
+      ["3.8","In order for pupils to think critically, they must have a secure understanding of knowledge within the subject area they are being asked to think critically about."],
+      ["3.9","In all subject areas, pupils learn new ideas by linking those ideas to existing knowledge, organising this knowledge into increasingly complex mental models or schemata; carefully sequencing teaching to facilitate this process is important."],
+      ["3.10","Pupils are likely to struggle to transfer what has been learnt in one discipline to a new or unfamiliar context."],
+      ["3.11","To access the curriculum, early literacy provides fundamental knowledge; reading comprises two elements: word reading and language comprehension; systematic synthetic phonics is the most effective approach for teaching pupils to decode."],
+      ["3.12","Every teacher can improve pupils' literacy, including by explicitly teaching reading, writing and oral language skills specific to individual disciplines."],
+      ["3.13","Effective assessment is critical to teaching because it provides teachers with information about pupils' understanding and needs."],
+      ["3.14","Good assessment helps teachers avoid being over-influenced by potentially misleading factors, such as how busy pupils appear."],
+      ["3.15","Before using any assessment, teachers should be clear about the decision it will be used to support and be able to justify its use."],
+      ["3.16","To be of value, teachers use information from assessments to inform the decisions they make; in turn, pupils must be able to act on feedback for it to have an effect."],
+      ["3.17","High-quality feedback can be written or verbal; it is likely to be accurate and clear, encourage further effort, and provide specific guidance on how to improve."],
+      ["3.18","Over time, feedback should support pupils to monitor and regulate their own learning."],
+      ["3.19","Working with colleagues to identify efficient approaches to assessment is important; assessment can become onerous and have a disproportionate impact on workload."]
+    ],
+    how:[
+      ["3.a","Developing and valuing the subject expertise of teachers and subject leaders to build a collective understanding of the inherent structures, key concepts, knowledge and skills within their subjects."],
+      ["3.b","Identifying examples of common misconceptions pupils may develop and promoting strategies for identifying and correcting misconceptions."],
+      ["3.c","Sharing powerful analogies, illustrations, examples, explanations and demonstrations for colleagues to use in their teaching."],
+      ["3.d","Curating conversations and protecting curriculum development time in the interests of sustained, critical and rigorous curriculum improvement."],
+      ["3.e","Ensuring all staff are aware that systematic synthetic phonics is the most effective approach for teaching pupils to decode, particularly those teaching early reading phonics."],
+      ["3.f","Identifying technical vocabulary across subjects and working with colleagues to ensure that these words are explicitly taught to pupils and that the use of technical language is modelled for pupils during classroom talk."],
+      ["3.g","Promoting the importance of domain and contextual knowledge and the role of foundation subjects in supporting reading."],
+      ["3.h","Sharing approaches that improve pupils' writing, such as modelling and combining reading and writing tasks."],
+      ["3.i","Working with school and subject leaders to develop a school feedback policy that ensures teachers know how to give accurate and clear feedback that provides specific guidance on how pupils can improve and can make use of peer and self-assessment."],
+      ["3.j","Sharing examples of best practice in feedback that are likely to increase its effectiveness (e.g. by sharing model work with pupils, and highlighting important details)."],
+      ["3.k","Supporting colleagues to implement school feedback policies and assessment practices that help teachers draw conclusions about what pupils have learned by looking at patterns of performance over a number of assessments."],
+      ["3.l","Working with school and subject leaders to ensure that a body of well-designed, externally validated, summative assessment resources exists and supporting the integration and understanding of these resources in curriculum planning."],
+      ["3.m","Working with school leaders to ensure that the school feedback policy considers strategies to support workload management including by highlighting the value of verbal feedback, supporting the use of abbreviations and codes in written feedback, and prioritising the highlighting of errors related to misunderstandings, rather than careless mistakes."],
+      ["3.n","Contributing to fair and transparent testing and/or examinations policies, processes and systems that are compliant with any external requirements."]
+    ]
+  },
+  {
+    num:4, title:"Behaviour", cls:"s4",
+    that:[
+      ["4.1","While classroom-level strategies have a big impact on pupil behaviour, consistency and coherence at a whole school level are paramount."],
+      ["4.2","Whole school changes usually take longer to embed than individually tailored or single-classroom approaches; however, behaviour programmes are more likely to have an impact on attainment outcomes if implemented at a whole school level."],
+      ["4.3","Teacher and pupil behaviours become ingrained and can be difficult to change, so most whole school behaviour policy or practice will likely take more than a school term to demonstrate impact."],
+      ["4.4","Some teachers will benefit from intensive support to improve their classroom management."],
+      ["4.5","Despite consistent systems being beneficial for all pupils, universal behaviour systems are unlikely to meet the needs of all pupils all of the time. If pupils need more intensive support with their behaviour, the approach may need to be adapted to individual needs."],
+      ["4.6","SENCOs, pastoral leaders and other specialist colleagues also have valuable expertise and can ensure that appropriate support is in place for pupils."],
+      ["4.7","Teaching model behaviours will reduce the need to manage misbehaviour."],
+      ["4.8","Teachers should encourage pupils to be self-reflective of their own behaviour."],
+      ["4.9","Establishing and reinforcing routines, including through positive reinforcement, can help create an effective learning environment."],
+      ["4.10","A predictable and secure environment benefits all pupils, but is particularly valuable for pupils with special educational needs."],
+      ["4.11","The ability to self-regulate one's emotions affects pupils' ability to learn, success in school and future lives."],
+      ["4.12","Building effective relationships is easier when pupils believe that their feelings will be considered and understood."],
+      ["4.13","Pupils are motivated by intrinsic factors (related to their identity and values) and extrinsic factors (related to reward)."],
+      ["4.14","Pupils' investment in learning is also driven by their prior experiences and perceptions of success and failure."],
+      ["4.15","Building effective relationships with parents, carers and families can improve pupils' motivation, behaviour and academic success."],
+      ["4.16","Pupil behaviour has multiple influences, some of which teachers can manage directly."],
+      ["4.17","While every person's behaviour and their motivations for it are complex and unique, the age of pupils, or their actual stage of development, can affect their behaviour in ways that are predictable."],
+      ["4.18","Understanding a pupil's context will inform effective responses to complex behaviour or misbehaviour."],
+      ["4.19","There are influences on behaviour which teaching staff can affect directly, others where there is a potential to influence or advise, and a third category where influences may be outside the purview of teaching staff."],
+      ["4.20","Pupils who need a tailored approach to support their behaviour do not necessarily have a special educational need and children with SEND will not necessarily need additional support with their behaviour."],
+      ["4.21","A key influence on a child's behaviour in school is being the victim of bullying. As well as causing stress for the pupil, being bullied is linked to lower attainment and longer-term health and prosperity outcomes."]
+    ],
+    how:[
+      ["4.a","Contributing to the creation and consistent implementation of a whole school approach to recognition, rules and sanctions that is predictable and built on good relationships between pupils and staff, complements the intended school culture and includes a clear approach to escalation of behaviour incidents."],
+      ["4.b","Explicitly teaching, and supporting colleagues to teach, model behaviours (including self-regulation) to pupils."],
+      ["4.c","Working with staff across the school to continuously refine and improve the behavioural approaches, considering information from colleagues and data."],
+      ["4.d","Ensuring that every pupil has a supportive relationship with a member of staff."],
+      ["4.e","Explaining the importance of rigorously maintaining clear behavioural expectations."],
+      ["4.f","Developing colleagues' ability to respond consistently to pupil behaviour through thoughtful application of recognition, rules and sanctions in line with the school's approach; giving manageable, specific and sequential instructions; using consistent language and non-verbal signals for common classroom directions; using early and least-intrusive interventions as an initial response to low level disruption."],
+      ["4.g","Responding swiftly, supportively, and consistently to behaviour incidents that have been escalated by colleagues."],
+      ["4.h","Ensuring it is clear to colleagues how the curriculum and extra-curricular activities can be related to pupil aspirations and long-term goals, alongside being able to express the inherent value of mastering content."],
+      ["4.i","Encouraging colleagues to provide opportunities for pupils to articulate their long-term goals and helping them to see how these are related to their success in school."],
+      ["4.j","Liaising with parents, carers and colleagues to better understand pupils' individual circumstances, and how they can be supported to meet high academic and behavioural expectations."],
+      ["4.k","Identifying and applying specialist knowledge to policies and regulations relating to SEND (including reasonable adjustments), looked after children, children who have a social worker, safeguarding and exclusions."],
+      ["4.l","Supporting colleagues to select, adapt and consistently use targeted, age/developmentally appropriate interventions without lowering expectations of any pupil's behaviour."],
+      ["4.m","Contributing to the creation and execution of a whole school anti-bullying approach including prevention work that encourages pupils to empathise with others, understand the harm caused by bullying and play an active role in supporting all their peers."],
+      ["4.n","Communicating this whole school anti-bullying approach clearly and consistently to pupils, parents, colleagues and the wider community."]
+    ]
+  },
+  {
+    num:5, title:"Additional & SEND", cls:"s5",
+    that:[
+      ["5.1","The SEND Code of Practice (2015) and Equality Act (2010) state that all children and young people are entitled to an appropriate education, one that is appropriate to their needs, promotes high standards and the fulfilment of potential."],
+      ["5.2","The SEND Code of Practice sets out four areas of need (communication and interaction; cognition and learning; social, emotional and mental health difficulties; and physical and/or sensory needs). Considering these primary needs is a useful first step, but a more detailed understanding of an individual pupil is required for action to be beneficial."],
+      ["5.3","Pupils with special educational needs or disabilities are likely to require additional or adapted support; working closely with colleagues, families and pupils to understand barriers and identify effective strategies is essential."],
+      ["5.4","Adapting teaching in a responsive way, including by providing targeted support to pupils who are struggling, is likely to increase pupil success."],
+      ["5.5","Pupils are likely to learn at different rates and to require different levels and types of support from teachers to succeed."],
+      ["5.6","Seeking to understand pupils' differences, including their different levels of prior knowledge and potential barriers to learning, is an essential part of teaching."],
+      ["5.7","Adaptive teaching is less likely to be valuable if it causes the teacher to artificially create distinct tasks for different groups of pupils or to set lower expectations for particular pupils."],
+      ["5.8","Flexibly grouping pupils within a class to provide more tailored support can be effective, but care should be taken to monitor its impact on engagement and motivation, particularly for low attaining pupils."],
+      ["5.9","There is a common misconception that pupils have distinct and identifiable learning styles. This is not supported by evidence and attempting to tailor lessons to learning styles is unlikely to be beneficial."]
+    ],
+    how:[
+      ["5.a","Ensuring that colleagues fulfil statutory duties with regard to the SEND Code of Practice (2015) and Equality Act (2010)."],
+      ["5.b","Ensuring interventions and support from teaching assistants and other professionals are targeted and never used as a replacement for high-quality teaching."],
+      ["5.c","Sharing examples of how to adapt lessons with colleagues, while maintaining high expectations for all, so that all pupils can experience success."],
+      ["5.d","Enabling colleagues to adapt lessons, make reasonable adjustments and implement structured academic or behavioural interventions, which are well-matched to pupils' needs, before seeking a diagnosis or specialist support through the graduated approach as defined within the SEND Code of Practice."],
+      ["5.e","Sharing effective approaches for scaffolding new content and removing scaffolds over time."],
+      ["5.f","Promoting different forms of assessment (including specialist assessments linked to each area of need), including within lessons, to identify pupils who need further support."],
+      ["5.g","Ensuring colleagues can draw on support when teaching children with special educational needs and disabilities, particularly the Special Educational Needs Co-ordinator (SENCO)."],
+      ["5.h","Promoting use of well-designed resources (e.g. existing high quality curricula and textbooks)."],
+      ["5.i","Sharing effective approaches for intervening in lessons with individuals and small groups rather than planning different lessons for different groups of pupils or taking pupils out of classrooms for interventions during lessons."],
+      ["5.j","Emphasising the need to maintain high expectations for all groups, and ensuring all pupils have access to a rich curriculum."],
+      ["5.k","Ensuring that any groups based on attainment are subject specific, avoiding the perception that these groups are fixed."]
+    ]
+  },
+  {
+    num:6, title:"Professional Development", cls:"s6",
+    that:[
+      ["6.1","Helping teachers improve through evidence-based professional development that is explicitly focused on improving classroom teaching can be a cost-effective way to improve pupils' academic outcomes when compared with other interventions, and can narrow the disadvantage attainment gap."],
+      ["6.2","Effective professional development is likely to involve a lasting change in teachers' capabilities or understanding so that their teaching changes."],
+      ["6.3","Professional development should be developed using a clear theory of change, where facilitators understand what the intended educational outcomes for teachers are and how these will subsequently impact pupil outcomes."],
+      ["6.4","Whilst professional development may need to be sustained over time, what the time is used for, is more important than the amount."],
+      ["6.5","More effective professional development is likely to be designed to build on the existing knowledge, skills and understanding of participants."],
+      ["6.6","The content of professional development programmes should be based on the best available evidence on effective pedagogies and classroom interventions, and aim to enhance capabilities and understanding in order to improve pupil outcomes."],
+      ["6.7","Teachers are more likely to improve if they feel that they are working within a supportive professional environment, where both trust and high professional standards are maintained."],
+      ["6.8","Supportive environments include having the time and resource to undertake relevant professional development and collaborate with peers, and the provision of feedback to enable teachers to improve."],
+      ["6.9","Teaching quality is a crucial factor in raising pupil attainment."],
+      ["6.10","Professional development is likely to be more effective when design and delivery involves specialist expertise from a range of sources."],
+      ["6.11","Teacher developers should choose approaches that suit the aims and context of their professional development programme. Successful models have included regular, expert-led conversations about classroom practice, teacher development groups, and structured interventions."],
+      ["6.12","All schools with early career teachers undertaking statutory induction must adhere to the regulations and relevant statutory guidance."],
+      ["6.13","School staff with disabilities may require reasonable adjustments; working closely with these staff to understand barriers and identify effective strategies is essential."]
+    ],
+    how:[
+      ["6.a","Supporting school leaders to align professional development with wider school improvement priorities."],
+      ["6.b","Promoting the use of well-designed frameworks and resources across the school (e.g. sources of subject knowledge, the Early Career Framework and associated core induction programme for early career teachers, ITT Core Content Framework, suite of National Professional Qualifications)."],
+      ["6.c","Supporting teachers across the school to plan, test and implement new, evidence-informed ideas."],
+      ["6.d","Working with school leaders and colleagues to identify opportunities for staff within the school to facilitate professional development approaches."],
+      ["6.e","Supporting teachers to continually develop specialist subject, phase and domain expertise."],
+      ["6.f","Supporting school leaders to identify teachers needs and make reasonable adjustments to professional development (e.g. to content, resources and venue)."],
+      ["6.g","Ensuring that any professional development time is used productively and that all colleagues perceive the relevance to their work."],
+      ["6.h","Promoting school wide understanding of the Early Career Framework, the ITT Core Content Framework, the Teachers' Standards and the Standard for Teachers' Professional Development to the school's training and induction offer."],
+      ["6.i","Supporting the induction process and ensuring early career teachers access their statutory entitlements."],
+      ["6.j","Ensuring that the professional environment for staff is supportive with sufficient time for high-quality dialogue and collaboration."],
+      ["6.k","Building a relationship of trust and mutual respect between the individuals involved."],
+      ["6.l","Tailoring the conversation to the expertise and needs of the individual (e.g. adapting conversations to be more or less facilitative, dialogic or directive)."],
+      ["6.m","Using approaches including observations of activities or artefacts, listening, facilitating reflection and discussion through the asking of clear and intentional questions, and receiving actionable feedback with opportunities to test ideas and practise implementation of new approaches."]
+    ]
+  },
+  {
+    num:7, title:"Organisational Management", cls:"s7",
+    that:[
+      ["7.1","Leaders have a duty of care to pupils and staff."],
+      ["7.2","All staff have a responsibility to provide a safe environment in which children can learn."],
+      ["7.3","Schools and colleges and their staff are an important part of the wider safeguarding system for children."],
+      ["7.4","Good financial, human and educational resource management, strategic planning, employee relations and risk management are the foundations of a good school."],
+      ["7.5","Schools are public bodies and so have a duty to use all public money in the public interest."],
+      ["7.6","Different types of schools are funded through different mechanisms. Each mechanism has different financial regulations associated with it."],
+      ["7.7","Different types of employees have different terms and conditions."],
+      ["7.8","A senior leader should play a major role in managing staff and resources under the overall direction of the headteacher."]
+    ],
+    how:[
+      ["7.a","Ensuring safeguarding is the first priority of every colleague in the school."],
+      ["7.b","Understanding and complying with the law and statutory guidance related to safeguarding (including Keeping Children Safe in Education) and health and safety."],
+      ["7.c","Working with other agencies (e.g. children's social care teams) to share information and support wider child protection work."],
+      ["7.d","Contributing to clear, effective safeguarding and health and safety policies, processes and systems within the school."],
+      ["7.e","Understanding and complying with the relevant law and statutory guidance on admissions, exclusions and appeals."],
+      ["7.f","Contributing to fair and inclusive policies, processes and systems."],
+      ["7.g","Ensuring that colleagues understand and carry out their responsibilities including complying with data, recording and reporting requirements."],
+      ["7.h","Contributing to best practice in planning, commissioning and monitoring alternative provision."],
+      ["7.i","Understanding the financial mechanisms (and associated regulations) through which the school is funded."],
+      ["7.j","Recognising that there is a strong connection between strategic decisions and the associated resource implications and using this knowledge to inform decision making."],
+      ["7.k","Considering the opportunity cost of any allocation decisions."],
+      ["7.l","Contributing to proposing a prudent budget to those responsible for governance and enabling clear, effective financial policies, processes and systems within the school."],
+      ["7.m","Understanding how financial benchmarking information can inform the school's spending decisions."],
+      ["7.n","Understanding how to read accounts, statements and forecasts, and using this to appropriately monitor the budget and assist with financial planning."],
+      ["7.o","Where relevant, contribute to developing a technology infrastructure that is good value for money, supports school operations and teaching, and is safe and secure."],
+      ["7.p","Where relevant, contribute to ensuring that school premises are secure, well maintained and meet any statutory requirements."],
+      ["7.q","Drawing on the experience and expertise of colleagues with specialist knowledge in organisational management."],
+      ["7.r","Contributing to ensuring recruitment and appointment processes are broad and inclusive, and based on open and fair criteria, to attract the best range of candidates for all roles."],
+      ["7.s","Having high expectations, communicating regularly and clearly, considering staff motivations and workload, prioritising staff professional development, and holding colleagues to account for their performance."],
+      ["7.t","Contributing to ensuring that all school leaders recognise that assessing teacher expertise through singular approaches (e.g. lesson observations) is limited and that they should use multiple methods of data collection to make inferences about teacher quality."],
+      ["7.u","Understanding and adhering to the law and statutory guidance related to employment and policy and processes related to pay and conditions."],
+      ["7.v","Considering the expertise different colleagues have and deploying and delegating to staff to maximise the use of that expertise."],
+      ["7.w","Contributing to creating and regularly reviewing succession plans in collaboration with those responsible for governance, particularly for critical roles across the school."],
+      ["7.x","Contributing to the creation of clear, effective HR policies, processes and systems (e.g. induction)."],
+      ["7.y","Contributing to the creation and implementation of policies, processes and systems that ensure all colleagues act in accordance with the law and statutory guidance while empowering professionals to exercise their judgement where necessary."],
+      ["7.z","Contributing to the creation of policies, processes and systems that are well designed (e.g. are clear and proportionate) and consistently implemented to avoid significant negative effects on professional culture and workload."],
+      ["7.aa","Contributing to an approach to risk management that involves regular review and reporting and considers the likelihood and impact of any risk (including significant emergencies) alongside any mitigating actions and contingencies."],
+      ["7.ab","Contributing to the creation of systems for feedback that allow policies, processes and systems to be reviewed and improved."]
+    ]
+  },
+  {
+    num:8, title:"Implementation", cls:"s8",
+    that:[
+      ["8.1","Implementation is an ongoing process that must adapt to context over time, rather than a single event. It involves the application of specific implementation activities and principles over an extended period."],
+      ["8.2","Successful implementation requires expert knowledge of the approach that is being implemented and the related area of practice, which is shared amongst staff."],
+      ["8.3","Implementation should involve repurposing existing processes and resources (e.g. governance, data collection) rather than creating a separate set of procedures."],
+      ["8.4","Effective implementation begins by accurately diagnosing the problem and making evidence-informed decisions on what to implement."],
+      ["8.5","Thorough preparation is important: time and care spent planning, communicating and resourcing the desired changes provides the foundation for successful delivery."],
+      ["8.6","Implementing an approach with fidelity (i.e. as intended) increases the chance of it impacting positively on school practices and pupil outcomes."],
+      ["8.7","A combination of integrated activities is likely to be needed to support implementation (e.g. training, monitoring, feedback) rather than any single activity. Follow-on support (e.g. through high-quality coaching) is key to embedding new skills and knowledge developed during initial training."],
+      ["8.8","Delivery of a new approach is a learning process — expect challenges but aim for continuous improvement. Monitoring implementation is an essential tool in identifying, and acting on, problems and solutions."],
+      ["8.9","The confidence to make good implementation decisions is derived, in part, from confidence in the data on which those decisions are based. Reliable monitoring and evaluation enables schools to make well-informed choices."],
+      ["8.10","A school's capacity to implement an approach is rarely static (e.g. staff leave, contexts change). Sustained implementation requires leaders to keep supporting and rewarding the appropriate use of an approach."],
+      ["8.11","Implementation benefits from dedicated but distributed school leadership. Senior leaders should provide a clear vision and direction for the changes to come."],
+      ["8.12","Implementation processes are influenced by, but also influence, school climate and culture. Implementation is easier when staff feel trusted to try new things and make mistakes."]
+    ],
+    how:[
+      ["8.a","Ensuring that implementation is a structured process, where school leaders actively plan, prepare, deliver and embed changes."],
+      ["8.b","Prioritising appropriately by making a limited number of meaningful strategic changes and pursuing these diligently."],
+      ["8.c","Reviewing and stopping ineffective practices before implementing new ones."],
+      ["8.d","Identifying a specific area for improvement using a robust diagnostic process, focusing on the problem that needs solving, rather than starting with a solution."],
+      ["8.e","Providing credible interpretations of reliable data, which focus on pupils' knowledge and understanding."],
+      ["8.f","Examining current approaches, how they need to change and the support required to do so."],
+      ["8.g","Adopting new approaches based on evidence of what has (and has not) worked before, using both internal and external evidence (e.g. pupil outcome data and research-based guidance)."],
+      ["8.h","Ensuring it is suitable for the school context, recognising the parameters within which the change will operate (e.g. school policies) and where the school is in its development trajectory."],
+      ["8.i","Assessing and adapting plans based on the degree to which colleagues are ready to implement the approach (e.g. current staff motivation, expertise, training and development)."],
+      ["8.j","Being explicit about what will be implemented, and the overall desired outcomes."],
+      ["8.k","Specifying the elements of the approach that appear critical to its success (i.e. the 'active ingredients') and communicating expectations around these with clarity."],
+      ["8.l","Developing a clear, logical and well specified implementation plan, and using this plan to build collective understanding and ownership of the approach."],
+      ["8.m","Using an integrated set of implementation activities that work at different levels in the school (e.g. individual teachers, whole school changes)."],
+      ["8.n","Managing expectations and encouraging 'buy-in' until positive signs of changes emerge."],
+      ["8.o","Monitoring implementation (including by clearly assigning and following up on the completion of critical tasks) and using this information to tailor and improve the approach over time."],
+      ["8.p","Reinforcing initial training with expert follow-on support within the school."],
+      ["8.q","Prioritising the 'active ingredients' of the approach until they are securely understood and implemented, and then, if needed, introducing adaptations."],
+      ["8.r","Using reliable monitoring and evaluation to review how the implementation activities are meeting the intended objectives and continue to align with school improvement priorities."],
+      ["8.s","Continuing to model, acknowledge, support, recognise and reward good practice."],
+      ["8.t","Treating scale-up of an approach as a new implementation process (e.g. from one department to another)."]
+    ]
+  },
+  {
+    num:9, title:"Working in Partnership", cls:"s9",
+    that:[
+      ["9.1","Good relationships and partnerships are a foundation of a good school."],
+      ["9.2","Building effective relationships with parents, carers and families can improve pupils' motivation, behaviour and academic success."],
+      ["9.3","There is an established link between the home learning environment at all ages and children's performance at school. However, evidence on effective strategies that schools can use to engage parents/carers in their children's education is mixed."],
+      ["9.4","If the aim is solely to improve academic outcomes, classroom interventions working directly with children currently have more evidence of effectiveness at improving educational outcomes than parenting interventions with the same aim."],
+      ["9.5","Working effectively with parents/carers can be challenging, and is likely to require sustained effort and support."],
+      ["9.6","Sharing effective practice between schools, and building capacity and effective mechanisms for doing so, is key to closing the attainment gap."]
+    ],
+    how:[
+      ["9.a","Providing practical approaches to support parents and carers to help their children with learning at home including promoting reading; establishing a regular routine; good homework habits; setting goals, planning, and managing their time, effort, and emotions."],
+      ["9.b","Communicating carefully to encourage positive, two-way dialogue about learning, focussing on building parents/carers' efficacy and avoiding stigmatising, blaming, or discouraging parents/carers, and ensuring staff communicate in the same way."],
+      ["9.c","Planning carefully for group-based parenting initiatives (e.g. regular workshops) ensuring that the time and location is convenient, recruitment is face-to-face, relationships are built on trust and the environment is informal and welcoming."],
+      ["9.d","Offering more structured, evidence-based programmes to develop positive behaviour and consistency where needed, starting by assessing needs and asking parents and carers about what would help them."],
+      ["9.e","Where appropriate, considering offering regular home visits for younger children with greater needs."],
+      ["9.f","Handling parental complaints effectively by developing a fair and non-adversarial procedure that is easy to use and understand."],
+      ["9.g","Clarifying, in writing where appropriate, the purpose of the partnership and the commitments and/or duties each partner has to it."],
+      ["9.h","Understanding the full range of organisations around a school, how they interact with the school and each other, and any statutory relationships or duties that exist between organisations."],
+      ["9.i","Establishing clear, open communications between organisations with nominated 'relationship holders' and clear escalation points where appropriate."],
+      ["9.j","Contributing expertise to existing networks and partnerships."],
+      ["9.k","Acting as a credible public advocate when required through a carefully thought through approach to engagement with the media and use of other communication channels."]
+    ]
+  },
+  {
+    num:10, title:"Governance & Accountability", cls:"s10",
+    that:[
+      ["10.1","High quality effective and ethical governance is key to success in our school system."],
+      ["10.2","Different types of school structures have different governance and accountability arrangements. Each set of arrangements has different regulations and statutory duties and therefore different policies, processes and systems associated with it."],
+      ["10.3","School leaders are accountable for their decisions and actions and must submit themselves to the scrutiny necessary to ensure this."],
+      ["10.4","School leaders have a responsibility to ensure that staff know, understand and are held to account for their professional responsibilities."]
+    ],
+    how:[
+      ["10.a","Understanding the governance arrangements of the school, the respective roles (including the chair and the clerk), and the policies, processes and systems associated with it."],
+      ["10.b","Understanding and, where relevant, applying the Governance handbook and Academies Financial Handbook to the creation and continuous improvement of policies, processes and systems."],
+      ["10.c","Preparing and presenting formal papers that are clear, concise and accurate."],
+      ["10.d","Building professional working relationships with those in governance roles (including the chair and the clerk)."],
+      ["10.e","Adhering to the Principles of Public Life at all times."],
+      ["10.f","Applying a good understanding of the law, statutory guidance and regulatory frameworks to decisions, processes and systems."],
+      ["10.g","Contributing to submitting timely, accurate reports and participating in inspections or reviews as required."],
+      ["10.h","Building professional working relationships with those in external accountability organisations."],
+      ["10.i","Understanding the roles and responsibilities involved in more complex partnerships involving pupils (e.g. health, education and children's services organisations in an Education and Health Care Plan, and where pupils are in alternative provision)."]
+    ]
+  }
+];
+
+let currentView = 'accordion';
+let activeFilter = 'all';
+let openSections = new Set();
+
+// Build chips
+const chipsEl = document.getElementById('chips');
+chipsEl.innerHTML = '<button class="chip active" onclick="setFilter(\'all\',this)">All</button>' +
+  data.map(s => `<button class="chip" onclick="setFilter(${s.num},this)">${s.num}. ${s.title}</button>`).join('');
+
+function setFilter(val, el) {
+  activeFilter = val;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  if (val !== 'all') openSections.add(Number(val));
+  render();
+}
+
+function setView(v, el) {
+  currentView = v;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function toggleSection(num) {
+  if (openSections.has(num)) openSections.delete(num);
+  else openSections.add(num);
+  render();
+}
+
+function hl(text, q) {
+  if (!q) return text;
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${esc})`, 'gi'), '<mark>$1</mark>');
+}
+
+function render() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const out = document.getElementById('output');
+  const stats = document.getElementById('stats');
+  let visible = 0;
+
+  if (currentView === 'accordion') {
+    let html = '';
+    data.forEach(sec => {
+      if (activeFilter !== 'all' && activeFilter !== sec.num) return;
+      const tf = sec.that.filter(([id,t]) => !q || id.toLowerCase().includes(q) || t.toLowerCase().includes(q));
+      const hf = sec.how.filter(([id,t]) => !q || id.toLowerCase().includes(q) || t.toLowerCase().includes(q));
+      if (q && tf.length === 0 && hf.length === 0) return;
+      visible++;
+      const isOpen = openSections.has(sec.num) || !!q;
+      html += `
+      <div class="section-block">
+        <div class="section-header${isOpen?' open':''}" onclick="toggleSection(${sec.num})">
+          <span class="sec-badge ${sec.cls}">${sec.num}</span>
+          <span class="sec-title">${sec.title}</span>
+          <span class="sec-count">${tf.length+hf.length} statements</span>
+          <svg class="chevron${isOpen?' open':''}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="section-body${isOpen?' open':''}">
+          <div class="cols">
+            <div class="col that">
+              <div class="col-head"><span class="col-head-dot"></span>Learn that</div>
+              ${tf.map(([id,t])=>`<div class="item"><span class="item-ref">${id}</span><span class="item-text">${hl(t,q)}</span></div>`).join('')||'<span style="font-size:12px;color:#9C9790">No matches</span>'}
+            </div>
+            <div class="col how">
+              <div class="col-head"><span class="col-head-dot"></span>Learn how to</div>
+              ${hf.map(([id,t])=>`<div class="item"><span class="item-ref">${id}</span><span class="item-text">${hl(t,q)}</span></div>`).join('')||'<span style="font-size:12px;color:#9C9790">No matches</span>'}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+    out.innerHTML = html || '<div class="empty">No statements match that search.</div>';
+  } else {
+    let html = '<div class="card-grid">';
+    data.forEach(sec => {
+      if (activeFilter !== 'all' && activeFilter !== sec.num) return;
+      const all = [...sec.that.map(([id,t])=>({id,t,type:'that'})), ...sec.how.map(([id,t])=>({id,t,type:'how'}))];
+      const filtered = all.filter(x => !q || x.id.toLowerCase().includes(q) || x.t.toLowerCase().includes(q));
+      if (q && filtered.length === 0) return;
+      visible++;
+      html += `<div class="card-section">
+        <div class="card-section-header">
+          <span class="sec-badge ${sec.cls}">${sec.num}</span>
+          <span style="font-size:14px;font-weight:600">${sec.title}</span>
+        </div>
+        <div class="card-items">
+          ${filtered.map(x=>`<div class="card-item"><span class="item-ref ${x.type==='that'?'that':''}" style="color:${x.type==='that'?'#2471A3':'#1E8449'};font-size:11px;font-weight:600;min-width:36px;flex-shrink:0">${x.id}</span>${hl(x.t,q)}</div>`).join('')}
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+    out.innerHTML = html || '<div class="empty">No statements match that search.</div>';
+  }
+
+  stats.textContent = visible > 0 ? `Showing ${visible} of ${data.length} sections` : '';
+}
+
+// original render() replaced by research-aware version below
+</script>
+<script>
+
+
+// ── Research citations integration ──
+const researchCitations = {"EEF_SEL": {"short": "EEF (2018) – Social & Emotional Learning", "full": "Education Endowment Foundation (2018). Toolkit: Social and emotional learning.", "url": "https://educationendowmentfoundation.org.uk/evidence-summaries/teaching-learning-toolkit/social-and-emotional-learning/"}, "Gutman2013": {"short": "Gutman & Schoon (2013) – Non-cognitive skills", "full": "Gutman, L. & Schoon, L. (2013). The impact of non-cognitive skills on the outcomes of young people.", "url": "https://educationendowmentfoundation.org.uk/public/files/Presentations/Publications/Non-cognitive_skills_literature_review_1.pdf"}, "Rubie2014": {"short": "Rubie-Davies et al. (2014) – Teacher expectations", "full": "Rubie-Davies, C. M., et al. (2014). Successive teacher expectation effects across the early school years. Journal of Applied Developmental Psychology, 35(3), 181–191.", "url": "https://doi.org/10.1016/j.appdev.2014.03.006"}, "Tsiplakides2010": {"short": "Tsiplakides & Keramida (2010) – Teacher expectations & achievement", "full": "Tsiplakides, I. & Keramida, A. (2010). The relationship between teacher expectations and student achievement. English Language Teaching, 3(2), P22.", "url": "http://files.eric.ed.gov/fulltext/EJ1081569.pdf"}, "Bennett2015": {"short": "Bennett (2015) – Group work", "full": "Bennett, T. (2015). Group work for the good. American Educator, Spring.", "url": "https://files.eric.ed.gov/fulltext/EJ1063868.pdf"}, "BlackWiliam2009": {"short": "Black & Wiliam (2009) – Formative assessment", "full": "Black, P., & Wiliam, D. (2009). Developing the theory of formative assessment. Educational Assessment, Evaluation and Accountability, 21(1), pp.5–31.", "url": ""}, "Chi2009": {"short": "Chi (2009) – Conceptual change", "full": "Chi, M. T. (2009). Three types of conceptual change. In International handbook of research on conceptual change (pp. 89–110). Routledge.", "url": ""}, "EEF_Dialogic2017": {"short": "EEF (2017) – Dialogic Teaching", "full": "Education Endowment Foundation (2017). Dialogic Teaching: Evaluation Report.", "url": "https://educationendowmentfoundation.org.uk/projects-and-evaluation/projects/dialogic-teaching"}, "EEF_Meta2017": {"short": "EEF (2017) – Metacognition & Self-regulated Learning", "full": "Education Endowment Foundation (2017). Metacognition and Self-regulated Learning Guidance Report.", "url": "https://educationendowmentfoundation.org.uk/tools/guidance-reports/metacognition-and-self-regulated-learning/"}, "EEF_Grouping2018": {"short": "EEF (2018) – Within-class attainment groupings", "full": "Education Endowment Foundation (2018). Toolkit: Within-class attainment groupings.", "url": "https://educationendowmentfoundation.org.uk/evidence-summaries/teaching-learning-toolkit/within-class-attainment-grouping/"}, "Elleman2009": {"short": "Elleman et al. (2009) – Vocabulary instruction", "full": "Elleman, A. M., Lindo, E. J., Morphy, P., & Compton, D. L. (2009). The Impact of Vocabulary Instruction on Passage-Level Comprehension. Journal of Research on Educational Effectiveness, 2(1), 1–44.", "url": "https://doi.org/10.1080/19345740802539200"}, "Pan2018": {"short": "Pan & Rickard (2018) – Test-enhanced learning", "full": "Pan, S. C., & Rickard, T. C. (2018). Transfer of test-enhanced learning: Meta-analytic review. Psychological Bulletin, 144(7), 710–756.", "url": "https://doi.org/10.1037/bul0000151"}, "Pashler2007": {"short": "Pashler et al. (2007) – Organising instruction", "full": "Pashler, H., et al. (2007). Organizing Instruction and Study to Improve Student Learning. Washington, DC: NCER.", "url": "https://files.eric.ed.gov/fulltext/ED498555.pdf"}, "Roediger2011": {"short": "Roediger & Butler (2011) – Retrieval practice", "full": "Roediger, H. L., & Butler, A. C. (2011). The critical role of retrieval practice in long-term retention. Trends in Cognitive Sciences, 15(1), 20–27.", "url": "https://doi.org/10.1016/j.tics.2010.09.003"}, "Zimmerman2002": {"short": "Zimmerman (2002) – Self-regulated learning", "full": "Zimmerman, B. J. (2002). Becoming a Self-Regulated Learner: An Overview. Theory Into Practice, 41(2), 64–70.", "url": "https://www.jstor.org/stable/1477457"}, "Deans2015": {"short": "Deans for Impact (2015) – Science of Learning", "full": "Deans for Impact (2015). The Science of Learning.", "url": "https://deansforimpact.org/resources/the-science-of-learning/"}, "EEF_Marking2016": {"short": "EEF (2016) – Written marking", "full": "Education Endowment Foundation (2016). A marked improvement? A review of the evidence on written marking.", "url": "https://educationendowmentfoundation.org.uk/public/files/Presentations/Publications/EEF_Marking_Review_April_2016.pdf"}, "Hattie2007": {"short": "Hattie & Timperley (2007) – The Power of Feedback", "full": "Hattie, J., & Timperley, H. (2007). The Power of Feedback. Review of Educational Research, 77(1), 81–112.", "url": "https://doi.org/10.3102/003465430298487"}, "Guzzetti2000": {"short": "Guzzetti (2000) – Counter-intuitive science concepts", "full": "Guzzetti, B. J. (2000). Learning counter-intuitive science concepts. Reading & Writing Quarterly, 16, 89–98.", "url": ""}, "Carroll2017": {"short": "Carroll et al. (2017) – SEN support", "full": "Carroll, J., et al. (2017). SEN support: A rapid evidence assessment. DfE.", "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/628630/DfE_SEN_Support_REA_Report.pdf"}, "EEF_SEN2020": {"short": "EEF (2020) – SEND in Mainstream Schools", "full": "Education Endowment Foundation (2020). Special Educational Needs in Mainstream School: Guidance Report.", "url": "https://educationendowmentfoundation.org.uk/tools/guidance-reports/special-educational-needs-disabilities/"}, "EEF_Individualised2018": {"short": "EEF (2018) – Individualised instruction", "full": "Education Endowment Foundation (2018). Toolkit: Individualised instruction.", "url": "https://educationendowmentfoundation.org.uk/evidence-summaries/teaching-learning-toolkit/individualised-instruction/"}, "EEF_LearningStyles2018": {"short": "EEF (2018) – Learning Styles", "full": "Education Endowment Foundation (2018). Toolkit: Learning Styles.", "url": "https://educationendowmentfoundation.org.uk/evidence-summaries/teaching-learning-toolkit/learning-styles/"}, "Steenbergen2016": {"short": "Steenbergen-Hu et al. (2016) – Ability grouping", "full": "Steenbergen-Hu, S., Makel, M. C., & Olszewski-Kubilius, P. (2016). What One Hundred Years of Research Says About the Effects of Ability Grouping. Review of Educational Research (86).", "url": "https://doi.org/10.3102/0034654316675417"}, "Tereshchenko2018": {"short": "Tereshchenko et al. (2018) – Mixed-attainment grouping", "full": "Tereshchenko, A., et al. (2018). Learners' attitudes to mixed-attainment grouping. Research Papers in Education, 1–20.", "url": "https://doi.org/10.1080/02671522.2018.1452962"}, "Willingham2010": {"short": "Willingham (2010) – Myth of Learning Styles", "full": "Willingham, D. T. (2010). The Myth of Learning Styles. Change, 42(5), 32–35.", "url": ""}, "Fletcher2020": {"short": "Fletcher-Wood & Zuccollo (2020) – High-quality CPD", "full": "Fletcher-Wood, H., & Zuccollo, J. (2020). The effects of high-quality professional development on teachers and students. Wellcome Trust.", "url": "https://epi.org.uk/wp-content/uploads/2020/02/EPI-Wellcome_CPD-Review__2020.pdf"}, "Kennedy2016": {"short": "Kennedy (2016) – CPD & teaching improvement", "full": "Kennedy, M. (2016). How does professional development improve teaching? Review of Educational Research 86(4): 945–980.", "url": ""}, "Kini2016": {"short": "Kini & Podolsky (2016) – Teaching experience", "full": "Kini, T., & Podolsky, A. (2016). Does Teaching Experience Increase Teacher Effectiveness? Palo Alto, CA: Learning Policy Institute.", "url": ""}, "EEF_Parents2019": {"short": "EEF (2019) – Working with Parents", "full": "Education Endowment Foundation (2019). Working with Parents to Support Children's Learning.", "url": "https://educationendowmentfoundation.org.uk/tools/guidance-reports/working-with-parents-to-support-childrens-learning/"}, "Sharples2018": {"short": "Sharples et al. (2018) – Putting Evidence to Work", "full": "Sharples, J.M., Albers, B., Fraser, S., Kime, S. (2018). Putting Evidence to Work – A School's Guide to Implementation. London: EEF.", "url": ""}, "Wubbels2014": {"short": "Wubbels et al. (2014) – Teacher-student relationships", "full": "Wubbels, T., et al. (2014). Teacher-student relationships and classroom management. In Handbook of classroom management (2nd ed., pp. 363–386). Routledge.", "url": ""}, "Scott2018": {"short": "Scott et al. (2018) – Literacy across disciplines", "full": "Scott, C. E., et al. (2018). The what, when, and how of preservice teachers and literacy across the disciplines. Teaching and Teacher Education, 73, 1–13.", "url": "https://doi.org/10.1016/j.tate.2018.03.010"}, "Shanahan2005": {"short": "Shanahan (2005) – National Reading Panel", "full": "Shanahan, T. (2005). The National Reading Panel Report: Practical Advice for Teachers.", "url": "https://files.eric.ed.gov/fulltext/ED489535.pdf"}, "Sweller1998": {"short": "Sweller et al. (1998) – Cognitive load", "full": "Sweller, J., van Merrienboer, J. J. G., & Paas, F. G. W. C. (1998). Cognitive Architecture and Instructional Design. Educational Psychology Review, 10(3), 251–296.", "url": "https://link.springer.com/article/10.1023/A:1022193728205"}, "Chapman2013": {"short": "Chapman et al. (2013) – School connectedness", "full": "Chapman, R. L., Buckley, L., & Sheehan, M. (2013). School-Based Programs for Increasing Connectedness and Reducing Risk Behavior. 25(1), 95–114.", "url": ""}};
+const statementCitations = {"1.1": ["Gutman2013", "EEF_SEL"], "1.2": ["Rubie2014", "Tsiplakides2010"], "1.5": ["Rubie2014"], "1.6": ["Gutman2013"], "2.3": ["Bennett2015", "EEF_Dialogic2017"], "2.4": ["EEF_Grouping2018", "Steenbergen2016"], "2.6": ["Deans2015", "Pashler2007"], "2.7": ["Deans2015", "Sweller1998"], "2.8": ["Sweller1998", "Deans2015"], "2.9": ["Deans2015"], "2.10": ["Chi2009", "Guzzetti2000"], "2.11": ["Roediger2011", "Pashler2007"], "2.12": ["Roediger2011", "Pan2018", "Pashler2007"], "2.13": ["Deans2015", "Sweller1998"], "2.15": ["Deans2015"], "2.17": ["EEF_Meta2017", "Zimmerman2002"], "2.19": ["EEF_Dialogic2017"], "2.20": ["Deans2015"], "3.6": ["Chi2009", "Guzzetti2000"], "3.9": ["Deans2015", "Sweller1998"], "3.11": ["Shanahan2005", "Scott2018"], "3.12": ["Elleman2009", "Scott2018"], "3.13": ["BlackWiliam2009"], "3.14": ["BlackWiliam2009"], "3.16": ["BlackWiliam2009", "Hattie2007"], "3.17": ["Hattie2007", "EEF_Marking2016"], "3.18": ["Zimmerman2002", "EEF_Meta2017"], "3.19": ["EEF_Marking2016"], "4.8": ["EEF_SEL"], "4.11": ["EEF_SEL", "Gutman2013"], "4.12": ["Wubbels2014"], "4.15": ["EEF_Parents2019"], "5.5": ["EEF_SEN2020", "Carroll2017"], "5.7": ["EEF_Individualised2018"], "5.8": ["EEF_Grouping2018", "Tereshchenko2018"], "5.9": ["EEF_LearningStyles2018", "Willingham2010"], "6.1": ["Fletcher2020"], "6.2": ["Fletcher2020", "Kennedy2016"], "6.4": ["Kennedy2016"], "6.5": ["Fletcher2020"], "6.9": ["Kini2016"], "8.1": ["Sharples2018"], "8.4": ["Sharples2018"], "8.7": ["Sharples2018"], "8.9": ["Sharples2018"], "9.2": ["EEF_Parents2019"], "9.3": ["EEF_Parents2019"]};
+
+function buildResearchBtn(stmtId) {
+  const cids = statementCitations[stmtId];
+  if (!cids || cids.length === 0) return '';
+  const panelId = 'rp-' + stmtId.replace('.', '-');
+  return `<button class="research-btn" onclick="toggleResearch('${panelId}',event)" title="View research">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Research
+  </button>
+  <div class="research-panel" id="${panelId}">
+    <div class="research-panel-head">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Research evidence
+    </div>
+    ${cids.map(cid => {
+      const c = researchCitations[cid];
+      if (!c) return '';
+      const link = c.url ? `<a class="ref-link" href="${c.url}" target="_blank" rel="noopener">View ↗</a>` : '';
+      return `<div class="ref-item"><div class="ref-bullet"></div><div class="ref-text">${c.full}${link}</div></div>`;
+    }).join('')}
+  </div>`;
+}
+
+function toggleResearch(panelId, e) {
+  e.stopPropagation();
+  const panel = document.getElementById(panelId);
+  if (panel) panel.classList.toggle('open');
+}
+
+// Patch the hl function output to append research buttons
+const _origItemHTML = (id, t, q, type) => {
+  const refClass = type === 'that' ? 'that' : 'how';
+  const btn = buildResearchBtn(id);
+  return `<div class="item"><span class="item-ref">${id}</span><span class="item-text">${hl(t,q)}${btn}</span></div>`;
+};
+
+// Override render to inject research buttons
+const _origRender = render;
+render = function() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const out = document.getElementById('output');
+  const stats = document.getElementById('stats');
+  let visible = 0;
+
+  if (currentView === 'accordion') {
+    let html = '';
+    data.forEach(sec => {
+      if (activeFilter !== 'all' && activeFilter !== sec.num) return;
+      const tf = sec.that.filter(([id,t]) => !q || id.toLowerCase().includes(q) || t.toLowerCase().includes(q));
+      const hf = sec.how.filter(([id,t]) => !q || id.toLowerCase().includes(q) || t.toLowerCase().includes(q));
+      if (q && tf.length === 0 && hf.length === 0) return;
+      visible++;
+      const isOpen = openSections.has(sec.num) || !!q;
+      html += `
+      <div class="section-block">
+        <div class="section-header${isOpen?' open':''}" onclick="toggleSection(${sec.num})">
+          <span class="sec-badge ${sec.cls}">${sec.num}</span>
+          <span class="sec-title">${sec.title}</span>
+          <span class="sec-count">${tf.length+hf.length} statements</span>
+          <svg class="chevron${isOpen?' open':''}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="section-body${isOpen?' open':''}">
+          <div class="cols">
+            <div class="col that">
+              <div class="col-head"><span class="col-head-dot"></span>Learn that</div>
+              ${tf.map(([id,t])=>_origItemHTML(id,t,q,'that')).join('')||'<span style="font-size:12px;color:#9C9790">No matches</span>'}
+            </div>
+            <div class="col how">
+              <div class="col-head"><span class="col-head-dot"></span>Learn how to</div>
+              ${hf.map(([id,t])=>_origItemHTML(id,t,q,'how')).join('')||'<span style="font-size:12px;color:#9C9790">No matches</span>'}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+    out.innerHTML = html || '<div class="empty">No statements match that search.</div>';
+  } else {
+    let html = '<div class="card-grid">';
+    data.forEach(sec => {
+      if (activeFilter !== 'all' && activeFilter !== sec.num) return;
+      const all = [...sec.that.map(([id,t])=>({id,t,type:'that'})), ...sec.how.map(([id,t])=>({id,t,type:'how'}))]
+      const filtered = all.filter(x => !q || x.id.toLowerCase().includes(q) || x.t.toLowerCase().includes(q));
+      if (q && filtered.length === 0) return;
+      visible++;
+      html += `<div class="card-section">
+        <div class="card-section-header">
+          <span class="sec-badge ${sec.cls}">${sec.num}</span>
+          <span style="font-size:14px;font-weight:600">${sec.title}</span>
+        </div>
+        <div class="card-items">
+          ${filtered.map(x=>`<div class="card-item"><span class="item-ref ${x.type==='that'?'that':''}" style="color:${x.type==='that'?'#2471A3':'#1E8449'};font-size:11px;font-weight:600;min-width:36px;flex-shrink:0">${x.id}</span>${hl(x.t,q)}${buildResearchBtn(x.id)}</div>`).join('')}
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+    out.innerHTML = html || '<div class="empty">No statements match that search.</div>';
+  }
+
+  stats.textContent = visible > 0 ? `Showing ${visible} of ${data.length} sections` : '';
+};
+
+render();
+
+</script>
+</body>
+</html>
